@@ -34,7 +34,7 @@ fun NavBarHeader() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(painter = painterResource(R.drawable.applogo), contentDescription = "user profile", modifier = Modifier.size(100.dp).padding(10.dp).clip(CircleShape), contentScale = ContentScale.Crop)
-        Text(text = "Username", modifier = Modifier.padding(top = 10.dp))
+        Text(text = "Username", modifier = Modifier.padding(top = 8.dp))
     }
 }
 
