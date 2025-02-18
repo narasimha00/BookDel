@@ -121,9 +121,11 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) 
                 // username
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = {
+                        email = it.replace(" ", "")
+                    },
                     label = {
-                        Text("Enter username", fontWeight = FontWeight.Medium, color = Color.Gray)
+                        Text("Enter E-mail", fontWeight = FontWeight.Medium, color = Color.Gray)
                     },
                     leadingIcon = {
                         IconButton(onClick = { /*TODO*/ }) {
@@ -136,14 +138,13 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) 
                     textStyle = TextStyle(
                         fontSize = 20.sp,
                         textAlign = TextAlign.Center,
-                        color = Color.Black,
+                        // color = Color.Black,
                         fontWeight = FontWeight.Medium,
                         fontStyle = FontStyle.Normal,
                         fontFamily = FontFamily.SansSerif,
-                        textMotion = TextMotion.Animated
+                        textMotion = TextMotion.Animated,
                     )
                 )
-
 
                 // password
                 OutlinedTextField(
@@ -164,7 +165,7 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) 
                     textStyle = TextStyle(
                         fontSize = 20.sp,
                         textAlign = TextAlign.Center,
-                        color = Color.Black,
+                        // color = Color.Black,
                         fontWeight = FontWeight.Medium,
                         fontStyle = FontStyle.Normal,
                         fontFamily = FontFamily.SansSerif,
