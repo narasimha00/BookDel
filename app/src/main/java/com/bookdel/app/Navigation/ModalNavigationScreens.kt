@@ -8,4 +8,13 @@ sealed class ModalNavigationScreens {
 
     @Serializable
     object CartScreen: ModalNavigationScreens()
+
+    @Serializable
+    object AddressScreen: ModalNavigationScreens()
+
+    @Serializable
+    object PaymentScreen: ModalNavigationScreens()
+
+    @Serializable
+    object AboutUsScreen: ModalNavigationScreens()
 }
