@@ -29,15 +29,15 @@ fun SetupModalNavGraph(
             CartScreen(innerPadding = innerPadding)
         }
 
-        composable<NavigationScreens.AddressScreen> {
+        composable<ModalNavigationScreens.AddressScreen> {
             AddressScreen(innerPadding = innerPadding)
         }
 
-        composable<NavigationScreens.PaymentScreen> {
+        composable<ModalNavigationScreens.PaymentScreen> {
             PaymentScreen(innerPadding = innerPadding)
 
         }
-        composable<NavigationScreens.AboutUsScreen> {
+        composable<ModalNavigationScreens.AboutUsScreen> {
             AboutUsScreen(innerPadding = innerPadding)
 
         }
