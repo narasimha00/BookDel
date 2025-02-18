@@ -1,8 +1,9 @@
 package com.bookdel.app.Screens
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -28,7 +28,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -38,7 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -46,14 +48,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextMotion
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bookdel.app.R
+import androidx.navigation.NavHostController
+import com.bookdel.app.Authentication.AuthState
+import com.bookdel.app.Authentication.AuthViewModel
+import com.bookdel.app.Navigation.RootNavigation
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun loginScreen() {
+fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) {
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+    LaunchedEffect(authState.value) {
+        when(authState.value) {
+            is AuthState.Authenticated -> {
+                navController.popBackStack()
+                navController.navigate(RootNavigation.Home)
+            }
+            is AuthState.Error -> {
+                Toast.makeText(context, (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            }
+            else -> Unit
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -74,8 +91,6 @@ fun loginScreen() {
                 Color(0xFF9400D3), // Violet
                 Color(0xFF4B0082), // Indigo
                 Color(0xFF0000FF), // Blue
-//        Color(0xFF00FF00), // Green
-//        Color(0xFFFFFF00), // Yellow
                 Color(0xFFFF7F00), // Orange
                 Color(0xFFFF0000)  // Red
             )
@@ -84,7 +99,7 @@ fun loginScreen() {
                     colors = rainbowColors
                 )
             }
-            var username by rememberSaveable { mutableStateOf("") }
+            var email by rememberSaveable { mutableStateOf("") }
             var password by rememberSaveable { mutableStateOf("") }
             Column(
                 modifier = Modifier
@@ -106,8 +121,8 @@ fun loginScreen() {
                 )
                 // username
                 OutlinedTextField(
-                    value = username,
-                    onValueChange = { username = it },
+                    value = email,
+                    onValueChange = { email = it },
                     label = {
                         Text("Enter username", fontWeight = FontWeight.Medium, color = Color.Gray)
                     },
@@ -168,14 +183,21 @@ fun loginScreen() {
                 ) {
                     OutlinedButton(
                         onClick = {
-                            println("Sign up button clicked!")
+                            println("Log in button clicked!")
+                            if(email == "" || password == "") {
+                                Toast.makeText(context, "Kindly fill all the fields!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                authViewModel.login(email, password)
+                            }
                         },
                         modifier = Modifier
                             .weight(0.6f),
+                        enabled = authState.value != AuthState.Loading
 
-                        ) {
+                    ) {
                         Text("Login")
                     }
+
                     Spacer(
                         modifier = Modifier
                             .width(25.dp)
@@ -183,6 +205,11 @@ fun loginScreen() {
                     OutlinedButton(
                         onClick = {
                             println("Sign up button clicked!")
+                            if(email == "" || password == "") {
+                                Toast.makeText(context, "Kindly fill all the fields!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                authViewModel.signup(email, password)
+                            }
                         },
                         modifier = Modifier
                             .weight(0.7f),
@@ -191,7 +218,8 @@ fun loginScreen() {
                             contentColor = Color.White,
                             disabledContainerColor = Color.Gray,
                             disabledContentColor = Color.Black
-                        )
+                        ),
+                        enabled = authState.value != AuthState.Loading
                     ) {
                         Text("Sign up")
                     }

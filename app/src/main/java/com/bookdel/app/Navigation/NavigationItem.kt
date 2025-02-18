@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 data class NavigationItem(
     val title: String,
-    val route: NavigationScreens,
+    val route: ModalNavigationScreens,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector
 )

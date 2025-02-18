@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "390562685176",
+    "project_id": "bookdel-5487e",
+    "storage_bucket": "bookdel-5487e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390562685176:android:b7498851737828ae391b0d",
+        "android_client_info": {
+          "package_name": "com.bookdel.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu0Li3D50pIdDSNFPBMk6FC-_5swBa-5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

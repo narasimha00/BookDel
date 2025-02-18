@@ -1,6 +1,5 @@
 package com.bookdel.app.Navigation
 
-import androidx.collection.scatterSetOf
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
