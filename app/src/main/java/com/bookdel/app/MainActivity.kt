@@ -13,10 +13,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -63,7 +69,10 @@ class MainActivity : ComponentActivity() {
 
         val items = listOf(
             NavigationItem(title = "Main", route = NavigationScreens.MainScreen, selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home),
-            NavigationItem(title = "Cart", route = NavigationScreens.CartScreen, selectedIcon = Icons.Filled.ShoppingCart, unselectedIcon = Icons.Outlined.ShoppingCart)
+            NavigationItem(title = "Cart", route = NavigationScreens.CartScreen, selectedIcon = Icons.Filled.ShoppingCart, unselectedIcon = Icons.Outlined.ShoppingCart),
+            NavigationItem(title = "Address", route = NavigationScreens.AddressScreen, selectedIcon = Icons.Filled.LocationOn, unselectedIcon = Icons.Outlined.LocationOn),
+            NavigationItem(title = "Payment", route = NavigationScreens.PaymentScreen, selectedIcon = Icons.Filled.AccountBox, unselectedIcon = Icons.Outlined.AccountBox),
+            NavigationItem(title = "About Us", route = NavigationScreens.AboutUsScreen, selectedIcon = Icons.Filled.Info, unselectedIcon = Icons.Outlined.Info)
         )
 
         enableEdgeToEdge()
@@ -139,3 +148,4 @@ fun constructUI(modifier: Modifier = Modifier) {
         )
     }
 }
+
