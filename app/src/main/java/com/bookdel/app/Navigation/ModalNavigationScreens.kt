@@ -4,17 +4,17 @@ import kotlinx.serialization.Serializable
 
 sealed class ModalNavigationScreens {
     @Serializable
-    object MainScreen: ModalNavigationScreens()
+    data object MainScreen: ModalNavigationScreens()
 
     @Serializable
-    object CartScreen: ModalNavigationScreens()
+    data object CartScreen: ModalNavigationScreens()
 
     @Serializable
-    object AddressScreen: ModalNavigationScreens()
+    data object AddressScreen: ModalNavigationScreens()
 
     @Serializable
-    object PaymentScreen: ModalNavigationScreens()
+    data object PaymentScreen: ModalNavigationScreens()
 
     @Serializable
-    object AboutUsScreen: ModalNavigationScreens()
+    data object AboutUsScreen: ModalNavigationScreens()
 }

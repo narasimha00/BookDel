@@ -66,7 +66,7 @@ fun SetupRootNavGraph(
 
 sealed class RootNavigation {
     @Serializable
-    object Home: RootNavigation()
+    data object Home: RootNavigation()
     @Serializable
-    object Login: RootNavigation()
+    data object Login: RootNavigation()
 }
