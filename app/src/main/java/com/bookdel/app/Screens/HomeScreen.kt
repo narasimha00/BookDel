@@ -1,8 +1,11 @@
 package com.bookdel.app.Screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
@@ -57,33 +60,37 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
-                NavBarHeader()
-                Spacer(modifier = Modifier.height(16.dp))
-                HorizontalDivider(thickness = 2.dp, modifier = Modifier.height(1.dp).padding(horizontal = 20.dp))
-                Spacer(modifier = Modifier.height(16.dp))
-                NavBarBody(items = items) { item ->
-                    navController.navigate(item.route)
-                    scope.launch {
-                        drawerState.close()
+                Column (
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                ) {
+                    NavBarHeader()
+                    Spacer(modifier = Modifier.height(16.dp))
+                    HorizontalDivider(thickness = 2.dp, modifier = Modifier.height(1.dp).padding(horizontal = 20.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
+                    NavBarBody(items = items) { item ->
+                        navController.navigate(item.route)
+                        scope.launch {
+                            drawerState.close()
+                        }
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    NavigationDrawerItem(
+                        label = {
+                            Text("Log Out")
+                        },
+                        selected = false,
+                        modifier = Modifier.padding(vertical = 50.dp),
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "logout icon"
+                            )
+                        },
+                        onClick = {
+                            authViewModel.signOut()
+                        },
+                    )
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                NavigationDrawerItem(
-                    label = {
-                        Text("Log Out")
-                    },
-                    selected = false,
-                    modifier = Modifier.padding(vertical = 50.dp),
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = "logout icon"
-                        )
-                    },
-                    onClick = {
-                        authViewModel.signOut()
-                    },
-                )
             }
         },
         drawerState = drawerState,
