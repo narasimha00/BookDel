@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.bookdel.app.Screens.AboutUsScreen
 import com.bookdel.app.Screens.AddressScreen
 import com.bookdel.app.Authentication.AuthViewModel
@@ -59,14 +60,18 @@ fun SetupRootNavGraph(
             LoginScreen(navController = navController, authViewModel = authViewModel)
         }
         composable<RootNavigation.Home> {
-            HomeScreen(items, authViewModel, navController)
+            val args = it.toRoute<RootNavigation.Home>()
+            HomeScreen(items, authViewModel, navController, username = args.username)
         }
     }
 }
 
 sealed class RootNavigation {
     @Serializable
-    data object Home: RootNavigation()
+    data class Home(
+        val username: String
+    ): RootNavigation()
+
     @Serializable
     data object Login: RootNavigation()
 }

@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginNavController: NavHostController) {
+fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginNavController: NavHostController, username: String) {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -63,7 +63,7 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
                 Column (
                     modifier = Modifier.verticalScroll(rememberScrollState())
                 ) {
-                    NavBarHeader()
+                    NavBarHeader(username)
                     Spacer(modifier = Modifier.height(16.dp))
                     HorizontalDivider(thickness = 2.dp, modifier = Modifier.height(1.dp).padding(horizontal = 20.dp))
                     Spacer(modifier = Modifier.height(16.dp))

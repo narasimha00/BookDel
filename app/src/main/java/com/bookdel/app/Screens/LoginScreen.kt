@@ -58,11 +58,14 @@ import com.bookdel.app.Navigation.RootNavigation
 fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) {
     val authState = authViewModel.authState.observeAsState()
     val context = LocalContext.current
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+
     LaunchedEffect(authState.value) {
         when(authState.value) {
             is AuthState.Authenticated -> {
                 navController.popBackStack()
-                navController.navigate(RootNavigation.Home)
+                navController.navigate(RootNavigation.Home(username = email.split("@")[0]))
             }
             is AuthState.Error -> {
                 Toast.makeText(context, (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
@@ -98,8 +101,6 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) 
                     colors = rainbowColors
                 )
             }
-            var email by rememberSaveable { mutableStateOf("") }
-            var password by rememberSaveable { mutableStateOf("") }
             Column(
                 modifier = Modifier
                     .fillMaxHeight()

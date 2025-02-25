@@ -1,6 +1,8 @@
 package com.bookdel.app.Navigation
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,20 +22,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bookdel.app.R
 
 @Composable
-fun NavBarHeader() {
+fun NavBarHeader(username: String = "Unknown") {
     Column(
         modifier = Modifier.fillMaxWidth().wrapContentHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(painter = painterResource(R.drawable.applogo), contentDescription = "user profile", modifier = Modifier.size(100.dp).padding(10.dp).clip(CircleShape), contentScale = ContentScale.Crop)
-        Text(text = "Username", modifier = Modifier.padding(top = 8.dp))
+        Image(painter = painterResource(R.drawable.applogo), contentDescription = "user profile", modifier = Modifier.size(120.dp).padding(6.dp).clip(CircleShape).border(
+            shape = CircleShape,
+            border = BorderStroke(2.dp, Color.LightGray)
+        ))
+        Text(text = username.replaceFirstChar { it.uppercaseChar() }, modifier = Modifier.padding(top = 3.dp), fontWeight = FontWeight.SemiBold, fontFamily = FontFamily.Serif)
     }
 }
 
