@@ -1,15 +1,17 @@
 package com.bookdel.app.Data
 
+import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.vector.ImageVector
 import java.util.Date
 
 data class Book(
-    val name: String? = null,
-    val image: ImageVector,
-    val author: String? = null,
-    val publishedDate: Date? = null,
-    val cost: Int? = null,
-    val category: BookCategory = BookCategory.UNKNOWN
+    // val image: ImageVector? = null,
+    // val author: String? = null,
+    // val publishedDate: Date? = null,
+    // val category: BookCategory = BookCategory.UNKNOWN,
+    val name: String,
+    @DrawableRes val imageRes: Int,
+    val cost: Int,
 )
 
 enum class BookCategory {
