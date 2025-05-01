@@ -14,6 +14,10 @@ import com.bookdel.app.Screens.HomeScreen
 import com.bookdel.app.Screens.LoginScreen
 import com.bookdel.app.Screens.MainScreen
 import com.bookdel.app.Screens.PaymentScreen
+import com.bookdel.app.util.DatastoreManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -50,28 +54,26 @@ fun SetupModalNavGraph(
 fun SetupRootNavGraph(
     navController: NavHostController,
     authViewModel: AuthViewModel,
-    items: List<NavigationItem>
+    items: List<NavigationItem>,
+    dsManager: DatastoreManager
 ) {
     NavHost(
         navController = navController,
         startDestination = RootNavigation.Login,
     ) {
         composable<RootNavigation.Login> {
-            LoginScreen(navController = navController, authViewModel = authViewModel)
+            LoginScreen(navController = navController, authViewModel = authViewModel, dsManager = dsManager)
         }
         composable<RootNavigation.Home> {
             val args = it.toRoute<RootNavigation.Home>()
-            HomeScreen(items, authViewModel, navController, username = args.username)
+            HomeScreen(items, authViewModel, navController, dsManager)
         }
     }
 }
 
 sealed class RootNavigation {
     @Serializable
-    data class Home(
-        val username: String
-    ): RootNavigation()
-
+    data object Home: RootNavigation()
     @Serializable
     data object Login: RootNavigation()
 }
