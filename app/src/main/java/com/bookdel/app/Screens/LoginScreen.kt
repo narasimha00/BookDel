@@ -1,5 +1,6 @@
 package com.bookdel.app.Screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -53,9 +54,10 @@ import androidx.navigation.NavHostController
 import com.bookdel.app.Authentication.AuthState
 import com.bookdel.app.Authentication.AuthViewModel
 import com.bookdel.app.Navigation.RootNavigation
+import com.bookdel.app.util.DatastoreManager
 
 @Composable
-fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) {
+fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController, dsManager: DatastoreManager) {
     val authState = authViewModel.authState.observeAsState()
     val context = LocalContext.current
     var email by rememberSaveable { mutableStateOf("") }
@@ -65,7 +67,10 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController) 
         when(authState.value) {
             is AuthState.Authenticated -> {
                 navController.popBackStack()
-                navController.navigate(RootNavigation.Home(username = email.split("@")[0]))
+                navController.navigate(RootNavigation.Home)
+                if(email.isNotEmpty()) {
+                    dsManager.updatePreferences(email.split("@")[0])
+                }
             }
             is AuthState.Error -> {
                 Toast.makeText(context, (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
