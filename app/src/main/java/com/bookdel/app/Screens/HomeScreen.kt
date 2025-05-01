@@ -39,8 +39,6 @@ import com.bookdel.app.Navigation.NavigationItem
 import com.bookdel.app.Navigation.RootNavigation
 import com.bookdel.app.Navigation.SetupModalNavGraph
 import com.bookdel.app.util.DatastoreManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

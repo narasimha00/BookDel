@@ -1,7 +1,6 @@
 package com.bookdel.app.util
 
 import android.content.Context
-import androidx.compose.ui.text.capitalize
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
