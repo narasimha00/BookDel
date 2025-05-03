@@ -3,6 +3,7 @@ package com.bookdel.app.Data
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.vector.ImageVector
 import java.util.Date
+import java.util.UUID
 
 data class Book(
     // val image: ImageVector? = null,
@@ -12,6 +13,7 @@ data class Book(
     val name: String,
     @DrawableRes val imageRes: Int,
     val cost: Int,
+    val id: String = UUID.randomUUID().toString()
 )
 
 enum class BookCategory {

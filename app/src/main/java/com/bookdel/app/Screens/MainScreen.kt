@@ -41,7 +41,7 @@ fun BookLayout(padding: PaddingValues) {
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.padding(padding)
     ) {
-        items(items.size) { index ->
+        items(items.size, key = {items[it].id}) { index ->
             OutlinedCard (
                 border = BorderStroke(1.dp, color = if(isSystemInDarkTheme()) Color.White else Color.Black),
                 modifier = Modifier
