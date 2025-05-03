@@ -10,9 +10,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.ExitToApp
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -28,8 +28,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -56,11 +59,22 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    var showConfirmationDialog = remember { mutableStateOf(false)}
     val authState = authViewModel.authState.observeAsState()
     val userDetails = dsManager.getPreferences().collectAsState(initial = UserDetails())
 
+    if(showConfirmationDialog.value) {
+        GetConfirmationAndLogout(
+            confirmLogout = {
+                authViewModel.signOut()
+            },
+            showConfirmationDialog = showConfirmationDialog
+        )
+    }
+
     @Composable
     fun logoutColor() = if(isSystemInDarkTheme()) LogoutColorDark else LogoutColor
+
     LaunchedEffect(authState.value) {
         when(authState.value) {
             is AuthState.UnAuthenticated -> {
@@ -108,7 +122,8 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
                             )
                         },
                         onClick = {
-                            authViewModel.signOut()
+                           // authViewModel.signOut()
+                            showConfirmationDialog.value = true
                         },
                     )
                 }
@@ -142,4 +157,38 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
             SetupModalNavGraph(navController = navController, innerPadding = innerPadding)
         }
     }
+}
+
+
+@Composable
+fun GetConfirmationAndLogout(confirmLogout: () -> Unit, showConfirmationDialog: MutableState<Boolean>) {
+    AlertDialog(
+        title = {
+            Text("Confirm Logout")
+        },
+        text = {
+            Text("Are you sure you want to log out?\nThis action can't be undone and you have to relogin with your credentials to be able to use this app again.")
+        },
+        onDismissRequest = {
+            showConfirmationDialog.value = false
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    confirmLogout()
+                }
+            ) {
+                Text("Log Out")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    showConfirmationDialog.value = false
+                }
+            ) {
+                Text("Cancel")
+            }
+        },
+    )
 }
