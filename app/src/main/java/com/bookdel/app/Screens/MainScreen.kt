@@ -2,6 +2,8 @@ package com.bookdel.app.Screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.MarqueeAnimationMode
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +38,7 @@ fun BookLayout(padding: PaddingValues) {
     val items = fetchBooks()
 
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 200.dp),
+        columns = GridCells.Adaptive(minSize = 150.dp),
         verticalArrangement = Arrangement.Center,
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.padding(padding)
@@ -46,7 +48,7 @@ fun BookLayout(padding: PaddingValues) {
                 border = BorderStroke(1.dp, color = if(isSystemInDarkTheme()) Color.White else Color.Black),
                 modifier = Modifier
                     .size(height = 240.dp, width = 80.dp)
-                    .padding(5.dp)
+                    .padding(start = 5.dp, end = 5.dp, top = 5.dp)
             ) {
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,7 +62,7 @@ fun BookLayout(padding: PaddingValues) {
                             .padding(top = 10.dp)
                     )
                     HorizontalDivider()
-                    Text("${items[index].name}", Modifier.padding(3.dp), fontSize = 15.sp, textAlign = TextAlign.Center)
+                    Text(items[index].name, Modifier.padding(3.dp).basicMarquee(animationMode = MarqueeAnimationMode.Immediately, repeatDelayMillis = 500), fontSize = 15.sp, textAlign = TextAlign.Center, softWrap = false)
                     Text("₹${items[index].cost}",  fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 4.dp))
                 }
             }
@@ -156,6 +158,6 @@ fun fetchBooks(): List<Book> {
     )
 
     return bookList
-    }
+}
 
 
