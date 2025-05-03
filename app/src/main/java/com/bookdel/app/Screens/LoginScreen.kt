@@ -66,6 +66,7 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController, 
         when(authState.value) {
             is AuthState.Authenticated -> {
                 navController.popBackStack()
+                Toast.makeText(context, "Welcome to BookDel!", Toast.LENGTH_SHORT).show()
                 navController.navigate(RootNavigation.Home)
                 if(email.isNotEmpty()) {
                     dsManager.updatePreferences(email.split("@")[0])
