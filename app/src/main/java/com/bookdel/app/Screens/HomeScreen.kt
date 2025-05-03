@@ -1,14 +1,18 @@
 package com.bookdel.app.Screens
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -19,6 +23,7 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -27,7 +32,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.bookdel.app.Authentication.AuthState
@@ -38,6 +45,8 @@ import com.bookdel.app.Navigation.NavBarHeader
 import com.bookdel.app.Navigation.NavigationItem
 import com.bookdel.app.Navigation.RootNavigation
 import com.bookdel.app.Navigation.SetupModalNavGraph
+import com.bookdel.app.ui.theme.LogoutColor
+import com.bookdel.app.ui.theme.LogoutColorDark
 import com.bookdel.app.util.DatastoreManager
 import kotlinx.coroutines.launch
 
@@ -50,6 +59,8 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
     val authState = authViewModel.authState.observeAsState()
     val userDetails = dsManager.getPreferences().collectAsState(initial = UserDetails())
 
+    @Composable
+    fun logoutColor() = if(isSystemInDarkTheme()) LogoutColorDark else LogoutColor
     LaunchedEffect(authState.value) {
         when(authState.value) {
             is AuthState.UnAuthenticated -> {
@@ -78,16 +89,22 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
+                    HorizontalDivider(thickness = 2.dp, modifier = Modifier.height(1.dp).padding(horizontal = 20.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     NavigationDrawerItem(
                         label = {
-                            Text("Log Out")
+                            Text("Log Out", fontSize = 15.sp, textAlign = TextAlign.Center, color = logoutColor())
                         },
                         selected = false,
-                        modifier = Modifier.padding(vertical = 50.dp),
+                        modifier = Modifier
+                            .padding(vertical = 15.dp, horizontal = 18.dp)
+                            .border(width = 1.5.dp, color = logoutColor(), shape = RoundedCornerShape(size = 50.dp))
+                        ,
                         icon = {
                             Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "logout icon"
+                                imageVector = Icons.Outlined.ExitToApp,
+                                contentDescription = "logout icon",
+                                tint = logoutColor(),
                             )
                         },
                         onClick = {
