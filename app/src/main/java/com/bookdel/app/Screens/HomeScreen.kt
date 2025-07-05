@@ -97,6 +97,7 @@ fun HomeScreen(items: List<NavigationItem>, authViewModel: AuthViewModel, loginN
                     HorizontalDivider(thickness = 2.dp, modifier = Modifier.height(1.dp).padding(horizontal = 20.dp))
                     Spacer(modifier = Modifier.height(16.dp))
                     NavBarBody(items = items) { item ->
+                        navController.popBackStack()
                         navController.navigate(item.route)
                         scope.launch {
                             drawerState.close()
