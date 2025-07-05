@@ -134,49 +134,44 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavHostController, 
                         Text("Enter E-mail", fontWeight = FontWeight.Medium, color = Color.Gray)
                     },
                     leadingIcon = {
-                        IconButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                imageVector = Icons.Default.Person,
-                                contentDescription = "Person",
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Person",)
                     },
                     textStyle = TextStyle(
                         fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
                         // color = Color.Black,
                         fontWeight = FontWeight.Medium,
                         fontStyle = FontStyle.Normal,
                         fontFamily = FontFamily.SansSerif,
                         textMotion = TextMotion.Animated,
-                    )
+                    ),
+                    singleLine = true
                 )
 
                 // password
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    visualTransformation = PasswordVisualTransformation('*'),
+                    visualTransformation = PasswordVisualTransformation('●'),
                     label = {
                         Text("Enter password", fontWeight = FontWeight.Medium, color = Color.Gray)
                     },
                     leadingIcon = {
-                        IconButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = "Lock",
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = "Lock"
+                        )
                     },
                     textStyle = TextStyle(
                         fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
                         // color = Color.Black,
                         fontWeight = FontWeight.Medium,
                         fontStyle = FontStyle.Normal,
                         fontFamily = FontFamily.SansSerif,
                         textMotion = TextMotion.Animated
-                    )
+                    ),
+                    singleLine = true
                 )
 
 
